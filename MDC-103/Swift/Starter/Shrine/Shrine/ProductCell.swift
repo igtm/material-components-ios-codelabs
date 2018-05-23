@@ -28,12 +28,17 @@ class ProductCell: MDCCardCollectionCell {
     self.backgroundColor = .white
 
     //TODO: Set custom font based on our ApplicationScheme and center align text
+    self.nameLabel.font = ApplicationScheme.shared.typographyScheme.subtitle1
+    self.priceLabel.font = ApplicationScheme.shared.typographyScheme.subtitle1
+    
+    self.nameLabel.textAlignment = .center
+    self.priceLabel.textAlignment = .center
 
     //TODO: Set to 0 to disable the curved corners
-    self.cornerRadius = 4.0;
+    self.cornerRadius = 0.0;
 
     //TODO: Set Border Width to 0 to disable the stroke outline
-    self.setBorderWidth(1.0, for:.normal)
+    self.setBorderWidth(0.0, for:.normal)
     self.setBorderColor(.lightGray, for: .normal)
   }
 

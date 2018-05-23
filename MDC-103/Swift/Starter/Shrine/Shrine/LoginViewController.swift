@@ -224,8 +224,30 @@ class LoginViewController: UIViewController {
     NSLayoutConstraint.activate(constraints)
 
     // TODO: Theme the interface with our colors
-
+    let colorScheme = ApplicationScheme.shared.colorScheme
+    self.view.tintColor = colorScheme.onSurfaceColor
+    self.view.backgroundColor = colorScheme.surfaceColor
+    self.logoImageView.tintColor = colorScheme.onSurfaceColor
+    self.titleLabel.textColor = colorScheme.onSurfaceColor
+    MDCTextFieldColorThemer.applySemanticColorScheme(colorScheme,
+                                                     to: self.usernameTextFieldController)
+    MDCTextFieldColorThemer.applySemanticColorScheme(colorScheme,
+                                                     to: self.passwordTextFieldController)
+    MDCButtonColorThemer.applySemanticColorScheme(colorScheme,
+                                                  to: self.cancelButton)
+    MDCButtonColorThemer.applySemanticColorScheme(colorScheme,
+                                                  to: self.nextButton)
     // TODO: Theme the interface with our typography
+    let typographyScheme = ApplicationScheme.shared.typographyScheme
+    titleLabel.font = typographyScheme.headline5
+    MDCTextFieldTypographyThemer.applyTypographyScheme(typographyScheme,
+                                                       to: usernameTextFieldController)
+    MDCTextFieldTypographyThemer.applyTypographyScheme(typographyScheme,
+                                                       to: passwordTextFieldController)
+    MDCButtonTypographyThemer.applyTypographyScheme(typographyScheme,
+                                                    to: cancelButton)
+    MDCButtonTypographyThemer.applyTypographyScheme(typographyScheme,
+                                                    to: nextButton)
   }
 
   // MARK: - Gesture Handling
