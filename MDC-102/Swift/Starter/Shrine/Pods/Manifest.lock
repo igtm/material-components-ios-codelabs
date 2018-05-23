@@ -440,7 +440,7 @@ DEPENDENCIES:
   - MaterialComponents (from `https://github.com/material-components/material-components-ios`, branch `google-io-codelabs-2018`)
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  https://github.com/cocoapods/specs.git:
     - MDFInternationalization
     - MDFTextAccessibility
     - MotionAnimator
@@ -467,4 +467,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 717bc6f90358782b26c83393e58f85efa8709ac3
 
-COCOAPODS: 1.5.0
+COCOAPODS: 1.5.2
