@@ -37,11 +37,33 @@ class HomeViewController: UICollectionViewController {
     //TODO: Add the appBar controller and views
     self.addChildViewController(appBar.headerViewController)
     self.appBar.headerViewController.headerView.trackingScrollView = self.collectionView
-    appBar.addSubviewsToparent()
+    appBar.addSubviewsToParent()
     
     // Setup Navigation Items
     //TODO: Create the items and set them on the view controller's navigationItems properties
-
+    // 左側の(leading)ボタン
+    let menuItemImage = UIImage(named: "MenuItem")
+    let templatedMenuItemImage = menuItemImage?.withRenderingMode(.alwaysTemplate)
+    let menuItem = UIBarButtonItem(image: templatedMenuItemImage,
+                                   style: .plain,
+                                   target: self,
+                                   action: #selector(menuItemTapped(sender:)))
+    self.navigationItem.leftBarButtonItem = menuItem
+    
+    // 右側の(trailing)ボタン
+    let searchItemImage = UIImage(named: "SearchItem")
+    let templatedSearchItemImage = searchItemImage?.withRenderingMode(.alwaysTemplate)
+    let searchItem = UIBarButtonItem(image: templatedSearchItemImage,
+                                     style: .plain,
+                                     target: nil,
+                                     action: nil)
+    let tuneItemImage = UIImage(named: "TuneItem")
+    let templatedTuneItemImage = tuneItemImage?.withRenderingMode(.alwaysTemplate)
+    let tuneItem = UIBarButtonItem(image: templatedTuneItemImage,
+                                   style: .plain,
+                                   target: nil,
+                                   action: nil)
+    self.navigationItem.rightBarButtonItems = [ tuneItem, searchItem ]
   }
 
   override func viewDidAppear(_ animated: Bool) {
@@ -72,7 +94,7 @@ class HomeViewController: UICollectionViewController {
   override func collectionView(_ collectionView: UICollectionView,
                                numberOfItemsInSection section: Int) -> Int {
     //TODO: Set the number of cells to be equal to the number of products in the catalog
-    return 0
+    return Catalog.count
   }
 
   override func collectionView(_ collectionView: UICollectionView,
@@ -80,7 +102,11 @@ class HomeViewController: UICollectionViewController {
     let cell = self.collectionView?.dequeueReusableCell(withReuseIdentifier: "ProductCell",
                                                         for: indexPath) as! ProductCell
     //TODO: Set the properties of the cell to reflect to product from the model
-
+    let product = Catalog.productAtIndex(index: indexPath.row)
+    cell.imageView.image = UIImage(named: product.imageName)
+    cell.nameLabel.text = product.productName
+    cell.priceLabel.text = product.price
+    
     return cell
   }
 
