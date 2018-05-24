@@ -12,42 +12,80 @@
  */
 
 import UIKit
+import MaterialComponents
 
 class ViewController: UIViewController, UITextFieldDelegate {
-  @IBOutlet weak var name: UITextField!
-  @IBOutlet weak var address: UITextField!
-  @IBOutlet weak var city: UITextField!
-  @IBOutlet weak var state: UITextField!
-  @IBOutlet weak var zip: UITextField!
+  @IBOutlet weak var name: MDCTextField!
+  @IBOutlet weak var address: MDCTextField!
+  @IBOutlet weak var city: MDCTextField!
+  @IBOutlet weak var state: MDCTextField!
+  @IBOutlet weak var zip: MDCTextField!
 
-  @IBOutlet weak var saveButton: UIButton!
+  @IBOutlet weak var saveButton: MDCRaisedButton!
 
   // MARK: Properties
+    
+    var nameController: MDCTextInputControllerOutlined?
+    var addressController: MDCTextInputControllerOutlined?
+    var cityController: MDCTextInputControllerOutlined?
+    var stateController: MDCTextInputControllerOutlined?
+    var zipController: MDCTextInputControllerOutlined?
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
     // TODO: Instantiate controllers
+    nameController = MDCTextInputControllerOutlined(textInput: name)
+    addressController = MDCTextInputControllerOutlined(textInput: address)
+    cityController = MDCTextInputControllerOutlined(textInput: city)
+    stateController = MDCTextInputControllerOutlined(textInput: state)
+    zipController = MDCTextInputControllerOutlined(textInput: zip)
+    
+    zip.delegate = self
   }
 
   // TODO: Override viewDidLayoutSubviews()
 
   // MARK: UITextFieldDelegate methods
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let text = textField.text,
+            let range = Range(range, in: text),
+            textField == zip else {
+            return true
+        }
+        
+        let finishedString = text.replacingCharacters(in: range, with: string)
+        if finishedString.rangeOfCharacter(from: CharacterSet.letters) != nil {
+            zipController?.setErrorText("Error: Zip can only contain numbers", errorAccessibilityValue: nil)
+        } else {
+            zipController?.setErrorText(nil, errorAccessibilityValue: nil)
+        }
+        return true
+    }
 
   // MARK: Target / Action
 
   @IBAction func saveDidTouch(_ sender: Any) {
     view.endEditing(true)
 
-    let alert = UIAlertController(title: "Do you accept these terms?", message: kLorem, preferredStyle: .alert)
-    alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (_) in
+    let alert = MDCAlertController(title: "Do you accept these terms?", message: kLorem)
+    alert.addAction(MDCAlertAction(title: "Yes", handler: { (_) in
       self.name.text = nil
       self.address.text = nil
       self.city.text = nil
       self.state.text = nil
       self.zip.text = nil
     }))
-    alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+    alert.addAction(MDCAlertAction(title: "Cancel", handler: nil))
     present(alert, animated: true, completion: nil)
   }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        saveButton.hitAreaInsets = UIEdgeInsets(top: (48 - self.saveButton.bounds.size.height) / -2,
+                                                left: 0,
+                                                bottom: (48 - self.saveButton.bounds.size.height) / -2,
+                                                right: 0)
+    }
 }
